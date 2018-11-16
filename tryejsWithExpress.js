@@ -18,7 +18,7 @@ console.log("App started on "+port_no)
 
 app.get('/coordinates/history', function(req, res) {
   
-  conn.query('SELECT * FROM dev1.citylocationdata order by queried_at desc; ', function(err, rows, fields)
+  conn.query(db.sql1, function(err, rows, fields)
         {   
 				if (err) throw err;
                 
@@ -68,7 +68,7 @@ app.get('/coordinates', function(req, res) {
 	
 		renderHtml1(rows, res, "Your City Result")
 	
-		updateHistory(latlon)
+		db.updateHistory(latlon)
 	
 	}
 	  
@@ -94,15 +94,4 @@ let renderHtml1 = function(rws, resp, title){
 	});
 }
 
-let updateHistory = function (row){
-	
-	sql = `insert into dev1.CityLocationData (Address,latitude,longitude) values ('${row.Address}', ${row.latitude}, ${row.longitude})`;
-	
-	console.log("Inserting : "+sql)
 
-	conn.query(sql, function (err, result) {
-		if (err) throw err;
-		console.log("Result: " + result);
-	  });
-	
-}

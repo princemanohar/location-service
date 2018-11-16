@@ -31,3 +31,18 @@ queried_at DATETIME DEFAULT CURRENT_TIMESTAMP
 exports.getConn = function(){
 	return con;
 }
+
+exports.updateHistory = function (row){
+	
+	sql = `insert into dev3.CityLocationData (Address,latitude,longitude) values ('${row.Address}', ${row.latitude}, ${row.longitude})`;
+	
+	console.log("Inserting : "+sql)
+
+	conn.query(sql, function (err, result) {
+		if (err) throw err;
+		console.log("Result: " + result);
+	  });
+	
+}
+
+exports.sql1 = "SELECT * FROM dev3.citylocationdata order by queried_at desc; "
