@@ -5,48 +5,15 @@ let ejs = require('ejs');
 var app = express();
 app.set('view engine', 'ejs');
 var url = require('url');
-
-var mysql = require('mysql');
-
-var conn = mysql.createConnection({
-  host: "localhost",
-  user: "prince",
-  password: "abcd"
-});
-conn.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-});
-
-app.listen(8080);
+var db = require('./init_db');
 
 
-let renderHtml1 = function(rws, resp, title){
-	fs.readFile('index1.html', 'utf-8', function(err, content) {
-    if (err) {
-      res.end('error occurred');
-      return;
-    }
-	var renderedHtml = ejs.render(content, {rows:rws, heading:title});
-	console.log(renderedHtml)
-	resp.end(renderedHtml);
-	});
-}
-
-let updateHistory = function (row){
-	
-	sql = `insert into dev1.CityLocationData (Address,latitude,longitude) values ('${row.Address}', ${row.latitude}, ${row.longitude})`;
-	
-	console.log("Inserting : "+sql)
-
-	conn.query(sql, function (err, result) {
-		if (err) throw err;
-		console.log("Result: " + result);
-	  });
-	
-}
+conn = db.getConn();
 
 
+let port_no = 8080
+app.listen(port_no);
+console.log("App started on "+port_no)
 // Defining the Routes
 
 app.get('/coordinates/history', function(req, res) {
@@ -115,3 +82,27 @@ app.get('/coordinates', function(req, res) {
   
 });
 
+let renderHtml1 = function(rws, resp, title){
+	fs.readFile('index1.html', 'utf-8', function(err, content) {
+    if (err) {
+      res.end('error occurred');
+      return;
+    }
+	var renderedHtml = ejs.render(content, {rows:rws, heading:title});
+	console.log(renderedHtml)
+	resp.end(renderedHtml);
+	});
+}
+
+let updateHistory = function (row){
+	
+	sql = `insert into dev1.CityLocationData (Address,latitude,longitude) values ('${row.Address}', ${row.latitude}, ${row.longitude})`;
+	
+	console.log("Inserting : "+sql)
+
+	conn.query(sql, function (err, result) {
+		if (err) throw err;
+		console.log("Result: " + result);
+	  });
+	
+}
