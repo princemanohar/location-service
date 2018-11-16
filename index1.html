@@ -1,0 +1,35 @@
+<html>
+   <head><script type="text/javascript" src="ejs_production.js"></script>
+   </head>
+<body>
+<form action = "/coordinates" method = "get">
+<p>Enter City Name</p>
+<p><input type = "text" name = "address" /></p>
+<p><input type = "submit" value = "Submit" /></p>
+</form>
+<form action = "/coordinates/history" method = "get">
+
+<p><input type = "submit" value = "View History" /></p>
+</form>
+<h1><%=heading%></h1>
+
+	
+<%if (rows.length > 0) { %>
+<table align="left" border="1 px" width="30%">
+    <tr align="center">
+    <th>Address</th>
+    <th>Latitude</th> 
+    <th>Longitude</th>
+  </tr>
+<% for(var i=0; i < rows.length; i++) { %>
+   <tr align="center">
+     <td><%= rows[i].Address %></td>
+     <td><%= rows[i].latitude %></td>
+     <td><%= rows[i].longitude %></td>
+   </tr>
+<% } %>
+</table>
+<% } %>
+
+</body>
+</html>
