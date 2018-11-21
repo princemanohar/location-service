@@ -8,7 +8,7 @@ Edit file `init_db.js` and put your hostname,  username,  password correctly.
 
 ### To run the app:
 
-`node tryejsWithExpress.js`
+`node app.js`
 
 ### Using the Website:-
 
